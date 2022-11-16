@@ -63,6 +63,34 @@ defmodule DongEngine.BallTest do
     end
   end
 
+  describe "check_paddle_collision/4" do
+    test "returns true for collision with left paddle" do
+      ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 12}
+      paddle_dimensions = %Vector{x: 0, y: 8}
+      paddle_height = 5
+
+      assert Ball.check_paddle_collision(ball, paddle_dimensions, paddle_height, 1) == true
+    end
+
+    test "returns true for collision with right paddle" do
+      ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 12}
+      paddle_dimensions = %Vector{x: 24, y: 8}
+      paddle_height = 5
+
+      assert Ball.check_paddle_collision(ball, paddle_dimensions, paddle_height, 2) == true
+    end
+
+    test "no collision with either paddle returns false" do
+      ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 1}
+      paddle1_dimensions = %Vector{x: 0, y: 8}
+      paddle2_dimensions = %Vector{x: 24, y: 8}
+      paddle_height = 5
+
+      assert Ball.check_paddle_collision(ball, paddle1_dimensions, paddle_height, 1) == false
+      assert Ball.check_paddle_collision(ball, paddle2_dimensions, paddle_height, 2) == false
+    end
+  end
+
   test "move/1 returns struct with updated position" do
     position = %Vector{x: 420, y: 69}
     velocity = %Vector{x: -20, y: 1}
