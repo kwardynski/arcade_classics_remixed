@@ -1,6 +1,16 @@
 defmodule DongEngine.Ball do
   @moduledoc """
   Representation of the ball used in play
+
+  Actions:
+    - check_collision -> determine whether the ball has collided with the edge of the game board
+    - move -> calculate the ball's new position based on previous position and velocity
+    - bounce -> if a collision is detected, return a new randomized direction based on valid
+      angle and max/min velocity
+
+  Note:
+    Y direction/velocity is "flipped" from "normal" since (0,0) is at the top-left of the game
+    board and increases downwards
   """
 
   alias __MODULE__
@@ -38,7 +48,7 @@ defmodule DongEngine.Ball do
 
   def bounce(%Ball{} = ball, min_velocity, max_velocity, collision) do
     new_velocity = random_float(min_velocity, max_velocity)
-    new_direction = random_float(0, 2*:math.pi)
+    new_direction = randomize_direction_with_constraint(collision)
     x_component = calculate_x_component(new_direction, new_velocity)
     y_component = calculate_y_component(new_direction, new_velocity)
     Map.put(ball, :velocity, %Vector{x: x_component, y: y_component})
@@ -48,13 +58,24 @@ defmodule DongEngine.Ball do
   def calculate_edge(%Ball{} = ball, :bottom), do: ball.position.y + ball.radius
   def calculate_edge(%Ball{} = ball, :left), do: ball.position.x - ball.radius
   def calculate_edge(%Ball{} = ball, :right), do: ball.position.x + ball.radius
-  def calculate_edge(_ball, edge), do: {:error, "Invalid Edge"}
+  def calculate_edge(_ball, _edge), do: {:error, "Invalid Edge"}
+
+  def randomize_direction_with_constraint(:top), do: random_float(:math.pi, 2*:math.pi)
+  def randomize_direction_with_constraint(:bottom), do: random_float(0, :math.pi)
+  def randomize_direction_with_constraint(:right), do: random_float(0.5*:math.pi, 1.5*:math.pi)
+  def randomize_direction_with_constraint(:left) do
+    angle = random_float(1.5*:math.pi, 2.5*:math.pi)
+    case angle > 2*:math.pi do
+      true -> angle - 2*:math.pi
+      false -> angle
+    end
+  end
 
   defp random_float(min, max) do
     min + :rand.uniform() * (max-min)
   end
 
-  defp calculate_x_component(direction, velocity) do
+  def calculate_x_component(direction, velocity) do
     {sign, theta} = cond do
       direction <= :math.pi/2 -> {1, direction}
       direction <= :math.pi -> {-1, :math.pi - direction}
@@ -64,13 +85,13 @@ defmodule DongEngine.Ball do
     sign*velocity*:math.cos(theta)
   end
 
-  defp calculate_y_component(direction, velocity) do
+  def calculate_y_component(direction, velocity) do
     {sign, theta} = cond do
       direction <= :math.pi/2 -> {1, direction}
       direction <= :math.pi -> {1, :math.pi - direction}
       direction <= :math.pi*1.5 -> {-1, direction - :math.pi}
       true -> {-1, 2*:math.pi - direction}
     end
-    sign*velocity*:math.sin(theta)
+    -sign*velocity*:math.sin(theta)
   end
 end
