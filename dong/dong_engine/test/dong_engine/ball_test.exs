@@ -130,5 +130,4 @@ defmodule DongEngine.BallTest do
       assert bounced_ball.velocity.x >= 0
     end
   end
-
 end
