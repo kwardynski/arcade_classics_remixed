@@ -28,7 +28,7 @@ defmodule DongEngine.BallTest do
     end
   end
 
-  describe "check_collision/2" do
+  describe "check_board_collision/2" do
     setup do
       %{
         board: %Vector{x: 100, y: 100},
@@ -39,27 +39,27 @@ defmodule DongEngine.BallTest do
 
     test "collision at top", fixture do
       ball = %Ball{position: %Vector{x: 50, y: 8}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_collision(ball, fixture.board) == :top
+      assert Ball.check_board_collision(ball, fixture.board) == :top
     end
 
     test "collision at bottom", fixture do
       ball = %Ball{position: %Vector{x: 50, y: 92}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_collision(ball, fixture.board) == :bottom
+      assert Ball.check_board_collision(ball, fixture.board) == :bottom
     end
 
     test "collision at left", fixture do
       ball = %Ball{position: %Vector{x: 8, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_collision(ball, fixture.board) == :left
+      assert Ball.check_board_collision(ball, fixture.board) == :left
     end
 
     test "collision at right", fixture do
       ball = %Ball{position: %Vector{x: 92, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_collision(ball, fixture.board) == :right
+      assert Ball.check_board_collision(ball, fixture.board) == :right
     end
 
     test "no collision", fixture do
       ball = %Ball{position: %Vector{x: 50, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_collision(ball, fixture.board) == :none
+      assert Ball.check_board_collision(ball, fixture.board) == :none
     end
   end
 

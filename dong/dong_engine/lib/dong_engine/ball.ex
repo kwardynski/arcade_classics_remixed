@@ -3,7 +3,7 @@ defmodule DongEngine.Ball do
   Representation of the ball used in play
 
   Actions:
-    - check_collision -> determine whether the ball has collided with the edge of the game board
+    - check_board_collision -> determine whether the ball has collided with the edge of the game board
     - move -> calculate the ball's new position based on previous position and velocity
     - bounce -> if a collision is detected, return a new randomized direction based on valid
       angle and max/min velocity
@@ -30,7 +30,7 @@ defmodule DongEngine.Ball do
     }
   end
 
-  def check_collision(%Ball{} = ball, %Vector{x: board_width, y: board_height}) do
+  def check_board_collision(%Ball{} = ball, %Vector{x: board_width, y: board_height}) do
     cond do
       calculate_edge(ball, :top) <= 0 -> :top
       calculate_edge(ball, :bottom) >= board_height -> :bottom
