@@ -1,8 +1,8 @@
-defmodule DongEngine.BallTest do
+defmodule DongEngine.GameObjects.BallTest do
   use ExUnit.Case, async: true
-  doctest DongEngine.Ball
+  doctest DongEngine.GameObjects.Ball
 
-  alias DongEngine.Ball
+  alias DongEngine.GameObjects.Ball
   alias DongEngine.Physics.Vector
 
   describe "calculate_edge/2" do

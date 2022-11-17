@@ -1,4 +1,4 @@
-defmodule DongEngine.Ball do
+defmodule DongEngine.GameObjects.Ball do
   @moduledoc """
   Representation of the ball used in play
 
