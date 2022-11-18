@@ -31,16 +31,6 @@ defmodule DongEngine.GameObjects.Ball do
     }
   end
 
-  def check_board_collision(%Ball{} = ball, %Vector{x: board_width, y: board_height}) do
-    cond do
-      calculate_edge(ball, :top) <= 0 -> :top
-      calculate_edge(ball, :bottom) >= board_height -> :bottom
-      calculate_edge(ball, :left) <= 0 -> :left
-      calculate_edge(ball, :right) >= board_width -> :right
-      true -> :none
-    end
-  end
-
   def check_paddle_collision(%Ball{} = ball, %Vector{x: paddle_x, y: paddle_y}, paddle_height, 1) do
     ball_left_edge_x = calculate_edge(ball, :left)
     ball_left_edge_y = ball.position.y

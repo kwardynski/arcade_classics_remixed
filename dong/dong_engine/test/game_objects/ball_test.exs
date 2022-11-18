@@ -28,68 +28,68 @@ defmodule DongEngine.GameObjects.BallTest do
     end
   end
 
-  describe "check_board_collision/2" do
-    setup do
-      %{
-        board: %Vector{x: 100, y: 100},
-        velocity: %Vector{x: 0, y: 0},
-        radius: 12
-      }
-    end
+  # describe "check_board_collision/2" do
+  #   setup do
+  #     %{
+  #       board: %Vector{x: 100, y: 100},
+  #       velocity: %Vector{x: 0, y: 0},
+  #       radius: 12
+  #     }
+  #   end
 
-    test "collision at top", fixture do
-      ball = %Ball{position: %Vector{x: 50, y: 8}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_board_collision(ball, fixture.board) == :top
-    end
+  #   test "collision at top", fixture do
+  #     ball = %Ball{position: %Vector{x: 50, y: 8}, velocity: fixture.velocity, radius: fixture.radius}
+  #     assert Ball.check_board_collision(ball, fixture.board) == :top
+  #   end
 
-    test "collision at bottom", fixture do
-      ball = %Ball{position: %Vector{x: 50, y: 92}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_board_collision(ball, fixture.board) == :bottom
-    end
+  #   test "collision at bottom", fixture do
+  #     ball = %Ball{position: %Vector{x: 50, y: 92}, velocity: fixture.velocity, radius: fixture.radius}
+  #     assert Ball.check_board_collision(ball, fixture.board) == :bottom
+  #   end
 
-    test "collision at left", fixture do
-      ball = %Ball{position: %Vector{x: 8, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_board_collision(ball, fixture.board) == :left
-    end
+  #   test "collision at left", fixture do
+  #     ball = %Ball{position: %Vector{x: 8, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
+  #     assert Ball.check_board_collision(ball, fixture.board) == :left
+  #   end
 
-    test "collision at right", fixture do
-      ball = %Ball{position: %Vector{x: 92, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_board_collision(ball, fixture.board) == :right
-    end
+  #   test "collision at right", fixture do
+  #     ball = %Ball{position: %Vector{x: 92, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
+  #     assert Ball.check_board_collision(ball, fixture.board) == :right
+  #   end
 
-    test "no collision", fixture do
-      ball = %Ball{position: %Vector{x: 50, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
-      assert Ball.check_board_collision(ball, fixture.board) == :none
-    end
-  end
+  #   test "no collision", fixture do
+  #     ball = %Ball{position: %Vector{x: 50, y: 50}, velocity: fixture.velocity, radius: fixture.radius}
+  #     assert Ball.check_board_collision(ball, fixture.board) == :none
+  #   end
+  # end
 
-  describe "check_paddle_collision/4" do
-    test "returns true for collision with left paddle" do
-      ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 12}
-      paddle_dimensions = %Vector{x: 0, y: 8}
-      paddle_height = 5
+  # describe "check_paddle_collision/4" do
+  #   test "returns true for collision with left paddle" do
+  #     ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 12}
+  #     paddle_dimensions = %Vector{x: 0, y: 8}
+  #     paddle_height = 5
 
-      assert Ball.check_paddle_collision(ball, paddle_dimensions, paddle_height, 1) == true
-    end
+  #     assert Ball.check_paddle_collision(ball, paddle_dimensions, paddle_height, 1) == true
+  #   end
 
-    test "returns true for collision with right paddle" do
-      ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 12}
-      paddle_dimensions = %Vector{x: 24, y: 8}
-      paddle_height = 5
+  #   test "returns true for collision with right paddle" do
+  #     ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 12}
+  #     paddle_dimensions = %Vector{x: 24, y: 8}
+  #     paddle_height = 5
 
-      assert Ball.check_paddle_collision(ball, paddle_dimensions, paddle_height, 2) == true
-    end
+  #     assert Ball.check_paddle_collision(ball, paddle_dimensions, paddle_height, 2) == true
+  #   end
 
-    test "no collision with either paddle returns false" do
-      ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 1}
-      paddle1_dimensions = %Vector{x: 0, y: 8}
-      paddle2_dimensions = %Vector{x: 24, y: 8}
-      paddle_height = 5
+  #   test "no collision with either paddle returns false" do
+  #     ball = %Ball{position: %Vector{x: 12, y: 12}, velocity: %Vector{x: 0, y: 0}, radius: 1}
+  #     paddle1_dimensions = %Vector{x: 0, y: 8}
+  #     paddle2_dimensions = %Vector{x: 24, y: 8}
+  #     paddle_height = 5
 
-      assert Ball.check_paddle_collision(ball, paddle1_dimensions, paddle_height, 1) == false
-      assert Ball.check_paddle_collision(ball, paddle2_dimensions, paddle_height, 2) == false
-    end
-  end
+  #     assert Ball.check_paddle_collision(ball, paddle1_dimensions, paddle_height, 1) == false
+  #     assert Ball.check_paddle_collision(ball, paddle2_dimensions, paddle_height, 2) == false
+  #   end
+  # end
 
   test "move/1 returns struct with updated position" do
     position = %Vector{x: 420, y: 69}
