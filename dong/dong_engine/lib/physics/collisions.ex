@@ -49,6 +49,12 @@ defmodule DongEngine.Physics.Collisions do
     ball_past_paddle? && ball_within_paddle_height?
   end
 
+  # Detect collision between a Paddle and Board
+  # Returns true if hit detected
+  def detect(%Paddle{} = paddle, %Board{} = board) do
+    paddle.position.y <= 0 or paddle.position.y + paddle.height >= board.height
+  end
+
   # Catch-all for invalid types
   def detect(_invalid_object_1, _invalid_object_2) do
     {:error, "invalid objects"}

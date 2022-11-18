@@ -102,6 +102,36 @@ defmodule DongEngine.Physics.CollisionsTest do
     end
   end
 
+  describe "detect(%Paddle{}, %Board{})" do
+    setup do
+      %{
+        board: %Board{height: 100, width: 100},
+        paddle: %Paddle{
+          position: %Vector{x: 0, y: 0},
+          speed: 0,
+          height: 10,
+          player: 1
+        }
+      }
+    end
+
+    test "returns true if top paddle edge above top of board", fixture do
+      assert Collisions.detect(fixture.paddle, fixture.board)
+    end
+
+    test "returns true if bottom paddle edge below bottom of board", fixture do
+      new_position = %Vector{x: 0, y: 90}
+      paddle = Map.put(fixture.paddle, :position, new_position)
+      assert Collisions.detect(paddle, fixture.board)
+    end
+
+    test "returns false if paddle within board bounds", fixture do
+      new_position = %Vector{x: 0, y: 50}
+      paddle = Map.put(fixture.paddle, :position, new_position)
+      refute Collisions.detect(paddle, fixture.board)
+    end
+  end
+
   test "detect/2 returns  error tuple for invalid objects" do
     {:error, msg} = Collisions.detect(12, 12)
     assert msg == "invalid objects"
