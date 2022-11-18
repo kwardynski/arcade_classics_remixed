@@ -68,7 +68,8 @@ defmodule DongEngine.GameObjects.PaddleTest do
         paddle: %Paddle{
           position: %Vector{x: 0, y: 20},
           speed: 10,
-          height: 5
+          height: 5,
+          player: 1
         }
       }
     end

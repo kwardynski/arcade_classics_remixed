@@ -4,6 +4,7 @@ defmodule DongEngine.Physics.CollisionsTest do
 
   alias DongEngine.GameObjects.Ball
   alias DongEngine.GameObjects.Board
+  alias DongEngine.GameObjects.Paddle
   alias DongEngine.Physics.Collisions
   alias DongEngine.Physics.Vector
 
@@ -48,10 +49,61 @@ defmodule DongEngine.Physics.CollisionsTest do
     end
   end
 
+  describe "detect(%Ball{}, %Paddle{})" do
+
+    test "detects collision with Player 1's paddle" do
+      paddle = %Paddle{
+        position: %Vector{x: 0, y: 45},
+        speed: 10,
+        height: 10,
+        player: 1
+      }
+      ball = %Ball{
+        position: %Vector{x: 9, y: 46},
+        velocity: %Vector{x: 0, y: 0},
+        radius: 10
+      }
+      assert Collisions.detect(ball, paddle)
+    end
+
+    test "detects collision with Player 2's paddle" do
+      paddle = %Paddle{
+        position: %Vector{x: 100, y: 45},
+        speed: 10,
+        height: 10,
+        player: 2
+      }
+      ball = %Ball{
+        position: %Vector{x: 92, y: 46},
+        velocity: %Vector{x: 0, y: 0},
+        radius: 10
+      }
+      assert Collisions.detect(ball, paddle)
+    end
+
+    test "detects no collision" do
+      paddle = %Paddle{
+        position: %Vector{x: 0, y: 45},
+        speed: 10,
+        height: 10,
+        player: 1
+      }
+
+      [ {0, 10}, {50, 50} ]
+      |> Enum.each(fn({x, y}) ->
+        ball = %Ball{
+          position: %Vector{x: x, y: y},
+          velocity: %Vector{x: 0, y: 0},
+          radius: 10
+        }
+
+        refute Collisions.detect(ball, paddle)
+      end)
+    end
+  end
+
   test "detect/2 returns  error tuple for invalid objects" do
     {:error, msg} = Collisions.detect(12, 12)
     assert msg == "invalid objects"
   end
-
-
 end

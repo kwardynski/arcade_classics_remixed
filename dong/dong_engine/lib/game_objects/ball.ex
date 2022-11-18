@@ -31,30 +31,6 @@ defmodule DongEngine.GameObjects.Ball do
     }
   end
 
-  def check_paddle_collision(%Ball{} = ball, %Vector{x: paddle_x, y: paddle_y}, paddle_height, 1) do
-    ball_left_edge_x = calculate_edge(ball, :left)
-    ball_left_edge_y = ball.position.y
-
-    ball_past_paddle? = ball_left_edge_x <= paddle_x
-    ball_within_paddle_height? = ball_left_edge_y >= paddle_y && ball_left_edge_y <= paddle_y + paddle_height
-
-    if ball_past_paddle? && ball_within_paddle_height?,
-      do: true,
-      else: false
-  end
-
-  def check_paddle_collision(%Ball{} = ball, %Vector{x: paddle_x, y: paddle_y}, paddle_height, 2) do
-    ball_right_edge_x = calculate_edge(ball, :right)
-    ball_right_edge_y = ball.position.y
-
-    ball_past_paddle? = ball_right_edge_x >= paddle_x
-    ball_within_paddle_height? = ball_right_edge_y >= paddle_y && ball_right_edge_y <= paddle_y + paddle_height
-
-    if ball_past_paddle? && ball_within_paddle_height?,
-      do: true,
-      else: false
-  end
-
   def move(%Ball{} = ball) do
     new_x = ball.position.x + ball.velocity.x
     new_y = ball.position.y + ball.velocity.y
