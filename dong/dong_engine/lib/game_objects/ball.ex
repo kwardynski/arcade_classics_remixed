@@ -3,7 +3,6 @@ defmodule DongEngine.GameObjects.Ball do
   Representation of the ball used in play
 
   Actions:
-    - check_board_collision -> determine whether the ball has collided with the edge of the game board
     - move -> calculate the ball's new position based on previous position and velocity
     - bounce -> if a collision is detected, return a new randomized direction based on valid
       angle and max/min velocity
