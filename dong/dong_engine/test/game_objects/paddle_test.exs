@@ -84,7 +84,7 @@ defmodule DongEngine.GameObjects.PaddleTest do
       assert moved_paddle.position.y == 30
     end
 
-    test "function clause error if first argument not a %Paddle{} struct", fixture do
+    test "function clause error if first argument not a %Paddle{} struct" do
       assert_raise(FunctionClauseError, fn ->
         Paddle.move(:invalid, :up)
       end)
