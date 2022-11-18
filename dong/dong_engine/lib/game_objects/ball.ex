@@ -3,7 +3,6 @@ defmodule DongEngine.GameObjects.Ball do
   Representation of the ball used in play
 
   Actions:
-    - check_board_collision -> determine whether the ball has collided with the edge of the game board
     - move -> calculate the ball's new position based on previous position and velocity
     - bounce -> if a collision is detected, return a new randomized direction based on valid
       angle and max/min velocity
@@ -29,40 +28,6 @@ defmodule DongEngine.GameObjects.Ball do
         radius: radius
       }
     }
-  end
-
-  def check_board_collision(%Ball{} = ball, %Vector{x: board_width, y: board_height}) do
-    cond do
-      calculate_edge(ball, :top) <= 0 -> :top
-      calculate_edge(ball, :bottom) >= board_height -> :bottom
-      calculate_edge(ball, :left) <= 0 -> :left
-      calculate_edge(ball, :right) >= board_width -> :right
-      true -> :none
-    end
-  end
-
-  def check_paddle_collision(%Ball{} = ball, %Vector{x: paddle_x, y: paddle_y}, paddle_height, 1) do
-    ball_left_edge_x = calculate_edge(ball, :left)
-    ball_left_edge_y = ball.position.y
-
-    ball_past_paddle? = ball_left_edge_x <= paddle_x
-    ball_within_paddle_height? = ball_left_edge_y >= paddle_y && ball_left_edge_y <= paddle_y + paddle_height
-
-    if ball_past_paddle? && ball_within_paddle_height?,
-      do: true,
-      else: false
-  end
-
-  def check_paddle_collision(%Ball{} = ball, %Vector{x: paddle_x, y: paddle_y}, paddle_height, 2) do
-    ball_right_edge_x = calculate_edge(ball, :right)
-    ball_right_edge_y = ball.position.y
-
-    ball_past_paddle? = ball_right_edge_x >= paddle_x
-    ball_within_paddle_height? = ball_right_edge_y >= paddle_y && ball_right_edge_y <= paddle_y + paddle_height
-
-    if ball_past_paddle? && ball_within_paddle_height?,
-      do: true,
-      else: false
   end
 
   def move(%Ball{} = ball) do
