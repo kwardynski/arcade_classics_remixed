@@ -17,7 +17,7 @@ defmodule TrickTacToeEngine.Coordinate do
   bounds of the game board
   """
   def new(row, col) when row in (0..@board_size) and col in (0..@board_size) do
-    {:ok, %Coordinate{row: row, col: col}}
+    %Coordinate{row: row, col: col}
   end
 
   def new(_row, _col) do
@@ -27,7 +27,7 @@ defmodule TrickTacToeEngine.Coordinate do
   @doc """
   Converts a coordinate to index based on board size
   ## Examples
-    iex> {:ok, coord} = TrickTacToeEngine.Coordinate.new(2, 1)
+    iex> coord= TrickTacToeEngine.Coordinate.new(2, 1)
     iex>  TrickTacToeEngine.Coordinate.to_index(coord)
     7
   """
@@ -41,7 +41,7 @@ defmodule TrickTacToeEngine.Coordinate do
   Converts an index back to a coordinate based on board size
   ## Examples
     iex> TrickTacToeEngine.Coordinate.to_coord(7)
-    {:ok, %TrickTacToeEngine.Coordinate{row: 2, col: 1}}
+    %TrickTacToeEngine.Coordinate{row: 2, col: 1}
 
     iex> TrickTacToeEngine.Coordinate.to_coord(10)
     {:error, :invalid_coordinate}
@@ -51,5 +51,4 @@ defmodule TrickTacToeEngine.Coordinate do
     col = index - row*(@board_size+1)
     new(row, col)
   end
-
 end
