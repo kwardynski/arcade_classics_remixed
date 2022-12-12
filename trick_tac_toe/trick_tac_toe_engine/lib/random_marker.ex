@@ -32,6 +32,6 @@ defmodule TrickTacToeEngine.RandomMarker do
     end
   end
 
-  def get(_), do: {:error, :invalid_seed}
+  def get(_), do: generate()
 
 end
