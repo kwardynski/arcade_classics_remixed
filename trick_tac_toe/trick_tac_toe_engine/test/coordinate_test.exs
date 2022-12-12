@@ -6,7 +6,7 @@ defmodule TrickTacToeEngine.CoordinateTest do
 
   describe "new/1" do
     test "returns an :ok tuple if given valid coordinates" do
-      {:ok, coordinate} = Coordinate.new(1, 2)
+      coordinate = Coordinate.new(1, 2)
       assert coordinate.row == 1
       assert coordinate.col == 2
     end
@@ -23,10 +23,10 @@ defmodule TrickTacToeEngine.CoordinateTest do
   end
 
   test "to_index properly converts sub-type coordinate to ind-type coordinate" do
-    {:ok, coord} = Coordinate.new(0, 0)
+    coord = Coordinate.new(0, 0)
     assert 0 == Coordinate.to_index(coord)
 
-    {:ok, coord} = Coordinate.new(1, 2)
+    coord = Coordinate.new(1, 2)
     assert 5 == Coordinate.to_index(coord)
   end
 
